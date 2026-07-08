@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Renoveplac · Reformas integrales',
-  description: 'Módulo de gestión de citas y visitas técnicas.',
+  title: 'Pro Strength Irun · Chat demo',
+  description: 'Demo de chatbot sin base de datos para Pro Strength Irun.',
 };
 
 export default function RootLayout({

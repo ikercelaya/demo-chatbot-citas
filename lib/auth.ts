@@ -1,49 +1,47 @@
-/**
- * lib/auth.ts
- * Hash de contraseñas (bcrypt) y helpers de sesión (cookie httpOnly).
- * Solo se usa en route handlers (runtime Node), nunca en el middleware.
- */
-import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
-import { AUTH_COOKIE, signToken, verifyToken, type SessionPayload } from './jwt';
 
-const SEVEN_DAYS = 7 * 24 * 60 * 60;
+export const AUTH_COOKIE = 'renoveplac_demo_session';
+const AUTH_VALUE = 'admin-demo-session';
 
-export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, 10);
+export interface DemoUser {
+  id: 'admin';
+  username: 'admin';
+  role: 'admin';
 }
 
-export async function verifyPassword(password: string, hash: string): Promise<boolean> {
-  return bcrypt.compare(password, hash);
+const ADMIN_USER: DemoUser = {
+  id: 'admin',
+  username: 'admin',
+  role: 'admin',
+};
+
+export function isValidAdminCredentials(username: string, password: string) {
+  return username.trim().toLowerCase() === 'admin' && password === 'admin';
 }
 
-export async function setAuthCookie(token: string): Promise<void> {
-  const store = await cookies();
-  store.set(AUTH_COOKIE, token, {
+export async function getCurrentUser(): Promise<DemoUser | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get(AUTH_COOKIE)?.value === AUTH_VALUE ? ADMIN_USER : null;
+}
+
+export async function setAuthCookie() {
+  const cookieStore = await cookies();
+  cookieStore.set(AUTH_COOKIE, AUTH_VALUE, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
     path: '/',
-    maxAge: SEVEN_DAYS,
+    maxAge: 60 * 60 * 24 * 7,
   });
 }
 
-export async function clearAuthCookie(): Promise<void> {
-  const store = await cookies();
-  store.set(AUTH_COOKIE, '', { httpOnly: true, path: '/', maxAge: 0 });
+export async function clearAuthCookie() {
+  const cookieStore = await cookies();
+  cookieStore.set(AUTH_COOKIE, '', {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    maxAge: 0,
+  });
 }
-
-/** Devuelve la sesión actual a partir de la cookie, o null. */
-export async function getCurrentUser(): Promise<SessionPayload | null> {
-  const store = await cookies();
-  const token = store.get(AUTH_COOKIE)?.value;
-  if (!token) return null;
-  const payload = await verifyToken(token);
-  if (!payload) return null;
-  // Usuario temporal expirado.
-  if (payload.expires_at && new Date(payload.expires_at) < new Date()) return null;
-  return payload;
-}
-
-export { signToken, verifyToken, AUTH_COOKIE };
-export type { SessionPayload };
