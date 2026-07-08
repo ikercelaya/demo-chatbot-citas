@@ -171,7 +171,17 @@ function shouldEscalate(text: string) {
 
 function answerFor(text: string) {
   if (includesAny(text, ['precio', 'tarifa', 'cuanto cuesta', 'coste', 'plan', 'mensualidad'])) {
-    return 'Pro Strength Irún cuenta con planes y tarifas para distintos tipos de entrenamiento. Para confirmar el precio actualizado, lo mejor es contactar por WhatsApp en el +34 699 84 51 99 o revisar la sección de planes de la web.';
+    return [
+      'En Pro Strength Irun hay 2 planes disponibles:',
+      '',
+      'Plan Basico: pensado para entrenar en horarios estandar. Incluye acceso a maquinaria profesional, app movil + entrenamiento y parking. Horario: lunes a viernes de 7:00 a 22:00 y fines de semana de 9:00 a 14:00. Modalidades: trimestral, semestral y anual.',
+      '',
+      'Plan Pro: pensado para tener maxima libertad horaria. Incluye acceso a maquinaria profesional, app movil + entrenamiento y parking. Horario: todos los dias del ano de 5:00 a 00:00. Modalidades: semestral y anual.',
+      '',
+      'Todos los planes incluyen ambiente controlado y comunidad exclusiva. Tambien existe posibilidad de escaner Fit3D y test epigenetico con cargo adicional.',
+      '',
+      'Para precios exactos y mas informacion, pregunta a Eva en el +34 699 84 51 99.',
+    ].join('\n');
   }
 
   if (includesAny(text, ['horario', 'abierto', 'hora', 'cierran', 'abren'])) {
@@ -184,6 +194,10 @@ function answerFor(text: string) {
 
   if (includesAny(text, ['telefono', 'teléfono', 'whatsapp', 'contacto', 'llamar'])) {
     return 'Puedes contactar con Pro Strength Irún en el +34 699 84 51 99. También aparece como contacto de WhatsApp en la ficha del negocio.';
+  }
+
+  if (includesAny(text, ['web', 'pagina', 'página', 'url', 'sitio'])) {
+    return 'La web de Pro Strength Irun es https://prostrengthirun.es/. Para precios exactos o dudas sobre los planes, pregunta a Eva en el +34 699 84 51 99.';
   }
 
   if (includesAny(text, ['maquinas', 'máquinas', 'peso', 'mancuernas', 'equipamiento', 'poleas'])) {
