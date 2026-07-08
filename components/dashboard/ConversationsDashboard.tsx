@@ -18,6 +18,25 @@ function time(value: string) {
   }).format(new Date(value));
 }
 
+function renderMessageText(text: string) {
+  const lines = text.split('\n');
+  return lines.map((line, lineIndex) => {
+    const parts = line.split(/(\*\*[^*]+\*\*)/g);
+    return (
+      <span key={`${line}-${lineIndex}`}>
+        {parts.map((part, partIndex) =>
+          part.startsWith('**') && part.endsWith('**') ? (
+            <strong key={`${part}-${partIndex}`}>{part.slice(2, -2)}</strong>
+          ) : (
+            <span key={`${part}-${partIndex}`}>{part}</span>
+          ),
+        )}
+        {lineIndex < lines.length - 1 && <br />}
+      </span>
+    );
+  });
+}
+
 export default function ConversationsDashboard() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -166,7 +185,7 @@ export default function ConversationsDashboard() {
                       <div className="mb-1 text-xs font-black uppercase opacity-60">
                         {roleName(message.role)} - {time(message.createdAt)}
                       </div>
-                      {message.text}
+                      <div className="whitespace-pre-wrap">{renderMessageText(message.text)}</div>
                     </div>
                   </div>
                 ))}

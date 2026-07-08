@@ -9,6 +9,25 @@ function labelFor(role: ChatMessage['role']) {
   return 'Bot';
 }
 
+function renderMessageText(text: string) {
+  const lines = text.split('\n');
+  return lines.map((line, lineIndex) => {
+    const parts = line.split(/(\*\*[^*]+\*\*)/g);
+    return (
+      <span key={`${line}-${lineIndex}`}>
+        {parts.map((part, partIndex) =>
+          part.startsWith('**') && part.endsWith('**') ? (
+            <strong key={`${part}-${partIndex}`}>{part.slice(2, -2)}</strong>
+          ) : (
+            <span key={`${part}-${partIndex}`}>{part}</span>
+          ),
+        )}
+        {lineIndex < lines.length - 1 && <br />}
+      </span>
+    );
+  });
+}
+
 export default function ChatDemo() {
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [customerName, setCustomerName] = useState('');
@@ -167,7 +186,7 @@ export default function ChatDemo() {
                       <div className="mb-1 text-xs font-bold uppercase opacity-70">
                         {labelFor(message.role)}
                       </div>
-                      {message.text}
+                      <div className="whitespace-pre-wrap">{renderMessageText(message.text)}</div>
                     </div>
                   </div>
                 );

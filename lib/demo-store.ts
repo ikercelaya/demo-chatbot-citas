@@ -174,13 +174,11 @@ function answerFor(text: string) {
     return [
       'En Pro Strength Irun hay 2 planes disponibles:',
       '',
-      'Plan Basico: pensado para entrenar en horarios estandar. Incluye acceso a maquinaria profesional, app movil + entrenamiento y parking. Horario: lunes a viernes de 7:00 a 22:00 y fines de semana de 9:00 a 14:00. Modalidades: trimestral, semestral y anual.',
+      '- **Plan Básico**: pensado para entrenar en horarios estándar. Incluye acceso a maquinaria profesional, app móvil + entrenamiento y parking. Horario: lunes a viernes de 7:00 a 22:00 y fines de semana de 9:00 a 14:00. Modalidades: trimestral, semestral y anual.',
       '',
-      'Plan Pro: pensado para tener maxima libertad horaria. Incluye acceso a maquinaria profesional, app movil + entrenamiento y parking. Horario: todos los dias del ano de 5:00 a 00:00. Modalidades: semestral y anual.',
+      '- **Plan Pro**: pensado para tener máxima libertad horaria. Incluye acceso a maquinaria profesional, app móvil + entrenamiento y parking. Horario: todos los días del año de 05:00 a 00:00. Modalidades: semestral y anual.',
       '',
-      'Todos los planes incluyen ambiente controlado y comunidad exclusiva. Tambien existe posibilidad de escaner Fit3D y test epigenetico con cargo adicional.',
-      '',
-      'Para precios exactos y mas informacion, pregunta a Eva en el +34 699 84 51 99.',
+      'Todos los planes incluyen ambiente controlado y comunidad exclusiva. También existe posibilidad de escáner Fit3D y test epigenético con cargo adicional. Para precios exactos y mas información, pregunta a Eva +34 699 84 51 99.',
     ].join('\n');
   }
 
