@@ -15,17 +15,17 @@ export default function DashboardTabs() {
   }
 
   return (
-    <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white">
+    <header className="sticky top-0 z-30 border-b border-white/10 bg-neutral-900">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
         <div className="flex items-center gap-6">
-          <Link href="/dashboard/conversations" className="py-4 text-base font-black text-neutral-950">
+          <Link href="/dashboard/conversations" className="py-4 text-base font-black text-white">
             Pro Strength Irun
           </Link>
           <nav className="flex gap-1">
             <Link
               href="/dashboard/conversations"
               className={`rounded-lg px-3 py-2 text-sm font-bold transition ${
-                active ? 'bg-red-50 text-red-700' : 'text-neutral-600 hover:bg-neutral-100'
+                active ? 'bg-red-600 text-white' : 'text-neutral-400 hover:bg-white/10 hover:text-white'
               }`}
             >
               Conversaciones
@@ -34,7 +34,7 @@ export default function DashboardTabs() {
         </div>
         <button
           onClick={logout}
-          className="rounded-lg px-3 py-2 text-sm font-bold text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-900"
+          className="rounded-lg px-3 py-2 text-sm font-bold text-neutral-400 transition hover:bg-white/10 hover:text-white"
         >
           Salir
         </button>

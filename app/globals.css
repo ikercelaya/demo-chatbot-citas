@@ -12,12 +12,7 @@ body {
 }
 
 body {
-  background: #f9fafb;
-  color: #1f2937;
+  background: #0a0a0a;
+  color: #ffffff;
   -webkit-font-smoothing: antialiased;
-}
-
-/* Oculta los spinners de inputs date en algunos navegadores para un look más limpio */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
 }

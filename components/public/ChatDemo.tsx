@@ -30,6 +30,7 @@ export default function ChatDemo() {
       setCustomerName(data.conversation.customerName);
       setCustomerContact(data.conversation.customerContact);
     }
+
     load();
     const timer = window.setInterval(load, 3000);
     return () => {
@@ -58,7 +59,7 @@ export default function ChatDemo() {
           text,
         }),
       });
-      const data = (await res.json()) as { conversation?: Conversation; error?: string };
+      const data = (await res.json()) as { conversation?: Conversation };
       if (res.ok && data.conversation) {
         setConversation(data.conversation);
         window.localStorage.setItem('prostrength-conversation-id', data.conversation.id);
@@ -72,8 +73,8 @@ export default function ChatDemo() {
   const messages = conversation?.messages ?? [];
 
   return (
-    <section className="grid min-h-screen bg-neutral-950 text-white lg:grid-cols-[minmax(320px,0.9fr)_minmax(420px,1.1fr)]">
-      <div className="flex flex-col justify-between border-b border-white/10 bg-neutral-900 px-6 py-8 lg:border-b-0 lg:border-r lg:px-10">
+    <section className="grid min-h-screen bg-neutral-950 text-white lg:h-screen lg:min-h-0 lg:overflow-hidden lg:grid-cols-[minmax(320px,0.82fr)_minmax(420px,1.18fr)]">
+      <aside className="flex flex-col justify-between border-b border-white/10 bg-neutral-900 px-6 py-8 lg:sticky lg:top-0 lg:h-screen lg:border-b-0 lg:border-r lg:px-10">
         <div>
           <div className="text-sm font-semibold uppercase tracking-[0.24em] text-red-500">
             Pro Strength Irun
@@ -82,7 +83,7 @@ export default function ChatDemo() {
             Asistente demo para clientes del gimnasio
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-neutral-300">
-            Responde dudas frecuentes sobre horarios, ubicación, equipamiento,
+            Responde dudas frecuentes sobre horarios, ubicacion, equipamiento,
             tarifas, entrenamientos personalizados y contacto. Si el cliente pide
             hablar con una persona, el bot se pausa y el equipo puede responder
             desde el panel.
@@ -105,9 +106,9 @@ export default function ChatDemo() {
             Panel admin
           </a>
         </div>
-      </div>
+      </aside>
 
-      <div className="flex min-h-screen flex-col px-4 py-5 sm:px-6 lg:px-8">
+      <div className="flex min-h-screen flex-col px-4 py-5 sm:px-6 lg:h-screen lg:min-h-0 lg:overflow-hidden lg:px-8">
         <div className="mb-4 grid gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-4 sm:grid-cols-2">
           <label className="text-sm font-medium text-neutral-300">
             Nombre
@@ -138,7 +139,7 @@ export default function ChatDemo() {
 
         <div
           ref={listRef}
-          className="flex-1 overflow-y-auto rounded-lg border border-white/10 bg-neutral-900 p-4"
+          className="min-h-0 flex-1 overflow-y-auto rounded-lg border border-white/10 bg-neutral-900 p-4"
         >
           {messages.length === 0 ? (
             <div className="flex h-full min-h-80 items-center justify-center text-center text-neutral-500">

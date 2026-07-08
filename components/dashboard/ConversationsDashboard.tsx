@@ -74,20 +74,20 @@ export default function ConversationsDashboard() {
   }
 
   return (
-    <div className="grid h-[calc(100vh-112px)] gap-4 lg:grid-cols-[360px_minmax(0,1fr)]">
-      <aside className="overflow-hidden rounded-lg border border-neutral-200 bg-white">
-        <div className="border-b border-neutral-200 p-4">
-          <h1 className="text-xl font-black text-neutral-950">Conversaciones</h1>
-          <p className="mt-1 text-sm text-neutral-500">
+    <div className="grid h-[calc(100vh-104px)] min-h-0 gap-4 lg:grid-cols-[360px_minmax(0,1fr)]">
+      <aside className="min-h-0 overflow-hidden rounded-lg border border-white/10 bg-neutral-900">
+        <div className="border-b border-white/10 p-4">
+          <h1 className="text-xl font-black text-white">Conversaciones</h1>
+          <p className="mt-1 text-sm text-neutral-400">
             Registro temporal de la demo sin base de datos.
           </p>
         </div>
 
         <div className="h-full overflow-y-auto">
           {loading ? (
-            <div className="p-4 text-sm text-neutral-500">Cargando...</div>
+            <div className="p-4 text-sm text-neutral-400">Cargando...</div>
           ) : conversations.length === 0 ? (
-            <div className="p-4 text-sm text-neutral-500">
+            <div className="p-4 text-sm text-neutral-400">
               Todavia no hay conversaciones. Escribe desde la portada para crear una.
             </div>
           ) : (
@@ -95,30 +95,30 @@ export default function ConversationsDashboard() {
               <button
                 key={conversation.id}
                 onClick={() => setSelectedId(conversation.id)}
-                className={`block w-full border-b border-neutral-100 p-4 text-left transition ${
-                  selected?.id === conversation.id ? 'bg-red-50' : 'hover:bg-neutral-50'
+                className={`block w-full border-b border-white/10 p-4 text-left transition ${
+                  selected?.id === conversation.id ? 'bg-red-600/15' : 'hover:bg-white/[0.04]'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="truncate font-bold text-neutral-950">
+                    <div className="truncate font-bold text-white">
                       {conversation.customerName}
                     </div>
-                    <div className="truncate text-sm text-neutral-500">
+                    <div className="truncate text-sm text-neutral-400">
                       {conversation.customerContact || 'Sin contacto'}
                     </div>
                   </div>
                   <span
                     className={`rounded-full px-2 py-1 text-xs font-bold ${
                       conversation.paused
-                        ? 'bg-amber-100 text-amber-700'
-                        : 'bg-emerald-100 text-emerald-700'
+                        ? 'bg-amber-400/15 text-amber-200'
+                        : 'bg-emerald-400/15 text-emerald-200'
                     }`}
                   >
                     {conversation.paused ? 'Pausado' : 'Bot activo'}
                   </span>
                 </div>
-                <div className="mt-3 truncate text-sm text-neutral-500">
+                <div className="mt-3 truncate text-sm text-neutral-400">
                   {conversation.messages.at(-1)?.text}
                 </div>
               </button>
@@ -127,44 +127,44 @@ export default function ConversationsDashboard() {
         </div>
       </aside>
 
-      <section className="flex min-h-0 flex-col rounded-lg border border-neutral-200 bg-white">
+      <section className="flex min-h-0 flex-col rounded-lg border border-white/10 bg-neutral-900">
         {selected ? (
           <>
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 p-4">
               <div>
-                <h2 className="text-lg font-black text-neutral-950">{selected.customerName}</h2>
-                <p className="text-sm text-neutral-500">
-                  {selected.customerContact || 'Sin contacto'} · Actualizado {time(selected.updatedAt)}
+                <h2 className="text-lg font-black text-white">{selected.customerName}</h2>
+                <p className="text-sm text-neutral-400">
+                  {selected.customerContact || 'Sin contacto'} - Actualizado {time(selected.updatedAt)}
                 </p>
               </div>
               <button
                 onClick={() => togglePaused(!selected.paused)}
                 className={`rounded-lg px-4 py-2 text-sm font-bold text-white transition ${
-                  selected.paused ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-amber-600 hover:bg-amber-500'
+                  selected.paused ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-red-600 hover:bg-red-500'
                 }`}
               >
                 {selected.paused ? 'Reactivar bot' : 'Pausar bot'}
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto bg-neutral-50 p-4">
+            <div className="min-h-0 flex-1 overflow-y-auto bg-neutral-950 p-4">
               <div className="space-y-3">
                 {selected.messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`flex ${message.role === 'customer' ? 'justify-start' : 'justify-end'}`}
+                    className={`flex ${message.role === 'customer' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
                       className={`max-w-[78%] rounded-lg px-4 py-3 text-sm leading-6 shadow-sm ${
                         message.role === 'customer'
-                          ? 'bg-white text-neutral-950'
+                          ? 'bg-red-600 text-white'
                           : message.role === 'staff'
                             ? 'bg-blue-600 text-white'
-                            : 'bg-neutral-900 text-white'
+                            : 'bg-white text-neutral-950'
                       }`}
                     >
                       <div className="mb-1 text-xs font-black uppercase opacity-60">
-                        {roleName(message.role)} · {time(message.createdAt)}
+                        {roleName(message.role)} - {time(message.createdAt)}
                       </div>
                       {message.text}
                     </div>
@@ -173,14 +173,14 @@ export default function ConversationsDashboard() {
               </div>
             </div>
 
-            <div className="border-t border-neutral-200 p-4">
-              <label className="text-sm font-bold text-neutral-700">Responder como equipo</label>
+            <div className="border-t border-white/10 p-4">
+              <label className="text-sm font-bold text-neutral-200">Responder como equipo</label>
               <div className="mt-2 flex gap-3">
                 <textarea
                   value={reply}
                   onChange={(e) => setReply(e.target.value)}
                   rows={2}
-                  className="min-w-0 flex-1 resize-none rounded-lg border border-neutral-300 px-3 py-2 outline-none focus:border-red-500"
+                  className="min-w-0 flex-1 resize-none rounded-lg border border-white/10 bg-neutral-950 px-3 py-2 text-white outline-none placeholder:text-neutral-500 focus:border-red-500"
                   placeholder="Escribe la respuesta al cliente..."
                 />
                 <button
